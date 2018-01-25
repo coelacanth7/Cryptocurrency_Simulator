@@ -10,8 +10,14 @@ class TickerContainer extends Component {
 	}
 
 	render() {
-		const { coins, isFetching } = this.props;
-		return <Ticker coins={coins} isFetching={isFetching} />;
+		const { coins, isFetching, getClickedPage } = this.props;
+		return (
+			<Ticker
+				coins={coins}
+				isFetching={isFetching}
+				getClickedPage={getClickedPage}
+			/>
+		);
 	}
 }
 
@@ -22,12 +28,28 @@ const mapStateToProps = state => {
 	};
 };
 
+const buildPageUrl = page => {
+	if (page < 100) {
+		return `https://api.coinmarketcap.com/v1/ticker/`;
+	} else {
+		return `https://api.coinmarketcap.com/v1/ticker/?start=${page}`;
+	}
+};
+
 const mapDispatchToProps = dispatch => {
 	return {
 		requestTickerData: () => {
 			dispatch(
 				_request(`https://api.coinmarketcap.com/v1/ticker/`, getTickerSuccess)
 			);
+		},
+		getClickedPage: e => {
+			e.preventDefault();
+			const page = e.target.name;
+			const url = buildPageUrl(page);
+			console.log("page", page);
+			console.log("url", url);
+			dispatch(_request(url, getTickerSuccess));
 		}
 	};
 };
