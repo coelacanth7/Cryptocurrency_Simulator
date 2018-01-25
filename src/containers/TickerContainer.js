@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import serialize from "form-serialize";
 
-import { arrayOfCoinIds } from "../arrayOfCoinIds";
 import {
 	_request,
 	getTickerSuccess,
@@ -10,16 +9,7 @@ import {
 	clearSearchResults
 } from "../actions";
 import Ticker from "../components/Ticker";
-
-import Fuse from "fuse.js";
-var options = {
-	shouldSort: true,
-	threshold: 0.1,
-	location: 0,
-	distance: 100,
-	maxPatternLength: 2,
-	minMatchCharLength: 2
-};
+import { buildPageUrl, fuseHelper } from "../helpers";
 
 class TickerContainer extends Component {
 	componentWillMount() {
@@ -58,14 +48,6 @@ const mapStateToProps = state => {
 	};
 };
 
-const buildPageUrl = page => {
-	if (page < 100) {
-		return `https://api.coinmarketcap.com/v1/ticker/`;
-	} else {
-		return `https://api.coinmarketcap.com/v1/ticker/?start=${page}`;
-	}
-};
-
 const mapDispatchToProps = dispatch => {
 	return {
 		requestTickerData: () => {
@@ -77,21 +59,14 @@ const mapDispatchToProps = dispatch => {
 			e.preventDefault();
 			const page = e.target.name;
 			const url = buildPageUrl(page);
-			console.log("page", page);
-			console.log("url", url);
 			dispatch(_request(url, getTickerSuccess));
 		},
 		getSearchResults: e => {
 			e.preventDefault();
 			const form = e.target;
 			const data = serialize(form, { hash: true });
-			var fuse = new Fuse(arrayOfCoinIds, options);
-			var result = fuse.search(data.query).slice(0, 8);
-			var arrayOfResults = result.map(indeces => arrayOfCoinIds[indeces]);
-			arrayOfResults.length === 0
-				? (arrayOfResults = ["sorry no results"])
-				: arrayOfResults;
-			dispatch(getSearchResults(arrayOfResults));
+			var fuseResults = fuseHelper(data);
+			dispatch(getSearchResults(fuseResults));
 		},
 		requestSingleCoinData: e => {
 			const coin = e.target.getAttribute("data");

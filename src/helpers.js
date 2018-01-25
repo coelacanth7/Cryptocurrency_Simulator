@@ -1,6 +1,27 @@
 import React from "react";
 
-const paginationConditionals = (coins, getClickedPage) => {
+import { arrayOfCoinIds } from "./arrayOfCoinIds";
+import Fuse from "fuse.js";
+var options = {
+	shouldSort: true,
+	threshold: 0.1,
+	location: 0,
+	distance: 100,
+	maxPatternLength: 2,
+	minMatchCharLength: 2
+};
+
+export const fuseHelper = data => {
+	var fuse = new Fuse(arrayOfCoinIds, options);
+	var result = fuse.search(data.query).slice(0, 8);
+	var arrayOfResults = result.map(indeces => arrayOfCoinIds[indeces]);
+	arrayOfResults.length === 0
+		? (arrayOfResults = ["sorry no results"])
+		: arrayOfResults;
+	return arrayOfResults;
+};
+
+export const paginationConditionals = (coins, getClickedPage) => {
 	var page = {};
 	var nextPage = (
 		<li className="page-item">
@@ -42,4 +63,10 @@ const paginationConditionals = (coins, getClickedPage) => {
 	}
 };
 
-export default paginationConditionals;
+export const buildPageUrl = page => {
+	if (page < 100) {
+		return `https://api.coinmarketcap.com/v1/ticker/`;
+	} else {
+		return `https://api.coinmarketcap.com/v1/ticker/?start=${page}`;
+	}
+};

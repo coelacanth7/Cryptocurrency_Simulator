@@ -1,6 +1,7 @@
 import React from "react";
-import paginationConditionals from "../helpers";
+import { paginationConditionals } from "../helpers";
 import SearchForm from "./elements/SearchForm";
+import CoinRow from "./elements/CoinRow";
 
 const Ticker = ({
 	coins,
@@ -17,18 +18,7 @@ const Ticker = ({
 
 	console.log("coins", coins);
 
-	const coinRows = coins.map(coin => (
-		<tr key={coin.symbol}>
-			<th scope="row">{coin.rank}</th>
-			<td>{coin.name}</td>
-			<td>$ {coin.price_usd}</td>
-			<td>{coin.price_btc}</td>
-			<td>{coin.market_cap_usd}</td>
-			<td>% {coin.percent_change_1h}</td>
-			<td>% {coin.percent_change_24h}</td>
-			<td>% {coin.percent_change_7d}</td>
-		</tr>
-	));
+	const coinRows = coins.map(coin => <CoinRow key={coin.symbol} coin={coin} />);
 
 	let pagination = "";
 	if (coins.length) {
