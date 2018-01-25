@@ -1,7 +1,15 @@
 import React from "react";
 import paginationConditionals from "../helpers";
+import SearchForm from "./elements/SearchForm";
 
-const Ticker = ({ coins, isFetching, getClickedPage }) => {
+const Ticker = ({
+	coins,
+	isFetching,
+	searchResults,
+	getClickedPage,
+	getSearchResults,
+	requestSingleCoinData
+}) => {
 	if (isFetching) {
 		return <h1>Loading film...</h1>;
 	}
@@ -26,6 +34,20 @@ const Ticker = ({ coins, isFetching, getClickedPage }) => {
 		pagination = paginationConditionals(coins, getClickedPage);
 	}
 
+	let searchListItems = "";
+	if (searchResults.length) {
+		searchListItems = searchResults.map(coinId => (
+			<li
+				key={coinId}
+				className="list-group-item list-group-item-action"
+				data={coinId}
+				onClick={requestSingleCoinData}
+			>
+				{coinId}
+			</li>
+		));
+	}
+
 	return (
 		<div>
 			<h1>Coins:</h1>
@@ -39,6 +61,8 @@ const Ticker = ({ coins, isFetching, getClickedPage }) => {
 					</nav>
 				</div>
 			</div>
+			<SearchForm getSearchResults={getSearchResults} />
+			<ul className="list-group">{searchListItems}</ul>
 			<table className="table table-hover">
 				<thead>
 					<tr>
