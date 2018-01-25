@@ -8,7 +8,8 @@ const Ticker = ({
 	searchResults,
 	getClickedPage,
 	getSearchResults,
-	requestSingleCoinData
+	requestSingleCoinData,
+	clearSearchResults
 }) => {
 	if (isFetching) {
 		return <h1>Loading film...</h1>;
@@ -61,7 +62,10 @@ const Ticker = ({
 					</nav>
 				</div>
 			</div>
-			<SearchForm getSearchResults={getSearchResults} />
+			<SearchForm
+				getSearchResults={getSearchResults}
+				clearSearchResults={clearSearchResults}
+			/>
 			<ul className="list-group">{searchListItems}</ul>
 			<table className="table table-hover">
 				<thead>
@@ -78,6 +82,16 @@ const Ticker = ({
 				</thead>
 				<tbody>{coinRows ? coinRows : ""}</tbody>
 			</table>
+			<div className="row">
+				<div className="text-right">
+					<nav className="text-right" aria-label="...">
+						<ul className="pagination pagination-lg top-paginator">
+							{pagination ? pagination.prevPage : ""}
+							{pagination ? pagination.nextPage : ""}
+						</ul>
+					</nav>
+				</div>
+			</div>
 		</div>
 	);
 };

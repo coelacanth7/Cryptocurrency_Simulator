@@ -2,7 +2,8 @@ import {
 	GETTING_REQUEST,
 	GET_TICKER_SUCCESS,
 	GET_REQUEST_FAILURE,
-	GET_SEARCH_RESULTS
+	GET_SEARCH_RESULTS,
+	CLEAR_SEARCH_RESULTS
 } from "./actions";
 
 const initialState = {
@@ -36,6 +37,11 @@ export function cryptoReducer(state = initialState, action) {
 			return {
 				...state,
 				searchResults: action.data
+			};
+		case CLEAR_SEARCH_RESULTS:
+			return {
+				...state,
+				searchResults: []
 			};
 		default:
 			return state;

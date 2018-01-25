@@ -1,6 +1,6 @@
 import React from "react";
 
-const SearchForm = ({ getSearchResults }) => {
+const SearchForm = ({ getSearchResults, clearSearchResults }) => {
 	return (
 		<form onSubmit={getSearchResults}>
 			<div className="form-row">
@@ -20,7 +20,7 @@ const SearchForm = ({ getSearchResults }) => {
 						type="button"
 						className="form-control btn btn-success"
 						value="clear search"
-						// onClick={clearSearchResults}
+						onClick={clearSearchResults}
 					/>
 				</div>
 			</div>
@@ -29,4 +29,3 @@ const SearchForm = ({ getSearchResults }) => {
 };
 
 export default SearchForm;
-

@@ -3,7 +3,12 @@ import { connect } from "react-redux";
 import serialize from "form-serialize";
 
 import { arrayOfCoinIds } from "../arrayOfCoinIds";
-import { _request, getTickerSuccess, getSearchResults } from "../actions";
+import {
+	_request,
+	getTickerSuccess,
+	getSearchResults,
+	clearSearchResults
+} from "../actions";
 import Ticker from "../components/Ticker";
 
 import Fuse from "fuse.js";
@@ -28,7 +33,8 @@ class TickerContainer extends Component {
 			searchResults,
 			getClickedPage,
 			getSearchResults,
-			requestSingleCoinData
+			requestSingleCoinData,
+			clearSearchResults
 		} = this.props;
 		return (
 			<Ticker
@@ -38,6 +44,7 @@ class TickerContainer extends Component {
 				getClickedPage={getClickedPage}
 				getSearchResults={getSearchResults}
 				requestSingleCoinData={requestSingleCoinData}
+				clearSearchResults={clearSearchResults}
 			/>
 		);
 	}
@@ -81,12 +88,19 @@ const mapDispatchToProps = dispatch => {
 			var fuse = new Fuse(arrayOfCoinIds, options);
 			var result = fuse.search(data.query).slice(0, 8);
 			var arrayOfResults = result.map(indeces => arrayOfCoinIds[indeces]);
+			arrayOfResults.length === 0
+				? (arrayOfResults = ["sorry no results"])
+				: arrayOfResults;
 			dispatch(getSearchResults(arrayOfResults));
 		},
 		requestSingleCoinData: e => {
 			const coin = e.target.getAttribute("data");
 			const url = `https://api.coinmarketcap.com/v1/ticker/${coin}/`;
 			dispatch(_request(url, getTickerSuccess));
+		},
+		clearSearchResults: e => {
+			e.preventDefault();
+			dispatch(clearSearchResults());
 		}
 	};
 };
