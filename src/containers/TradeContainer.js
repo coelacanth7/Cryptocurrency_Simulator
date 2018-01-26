@@ -29,7 +29,8 @@ class TradeContainer extends Component {
 			searchResults,
 			clickACoin,
 			selectedCoin,
-			formBool
+			formBool,
+			formBoolMessage
 		} = this.props;
 
 		return (
@@ -42,6 +43,7 @@ class TradeContainer extends Component {
 				clickACoin={clickACoin}
 				selectedCoin={selectedCoin}
 				formBool={formBool}
+				formBoolMessage={formBoolMessage}
 			/>
 		);
 	}
@@ -53,7 +55,8 @@ const mapStateToProps = state => {
 		cash: state.cash,
 		searchResults: state.searchResults,
 		selectedCoin: state.selectedCoin,
-		formBool: state.formBool
+		formBool: state.formBool,
+		formBoolMessage: state.formBoolMessage
 	};
 };
 
@@ -79,7 +82,7 @@ const mapDispatchToProps = (dispatch, ownprops) => {
 				} else {
 					var fuseResults = fuseHelper(enteredCoin);
 					dispatch(getSearchResults(fuseResults));
-					dispatch(setFormBool(false));
+					dispatch(setFormBool(false, "coin selection is no good"));
 				}
 			}, 3000);
 		},

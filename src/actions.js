@@ -55,10 +55,11 @@ export function setSelectedCoin(coin) {
 	};
 }
 
-export function setFormBool(bool) {
+export function setFormBool(bool, message) {
 	return {
 		type: SET_FORM_BOOL,
-		bool
+		bool,
+		message
 	};
 }
 

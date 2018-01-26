@@ -18,6 +18,7 @@ const initialState = {
 	selectedCoin: "",
 	formCoin: {},
 	formBool: true,
+	formBoolMessage: "",
 	isFetching: true,
 	error: null
 };
@@ -65,7 +66,8 @@ export function cryptoReducer(state = initialState, action) {
 		case SET_FORM_BOOL:
 			return {
 				...state,
-				formBool: action.bool
+				formBool: action.bool,
+				formBoolMessage: action.message
 			};
 		case GET_FORM_COIN_SUCCESS:
 			return {

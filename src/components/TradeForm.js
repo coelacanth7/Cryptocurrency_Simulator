@@ -8,7 +8,8 @@ const TradeForm = ({
 	searchResults,
 	clickACoin,
 	selectedCoin,
-	formBool
+	formBool,
+	formBoolMessage
 }) => {
 	let searchListItems = "";
 	if (searchResults.length) {
@@ -98,6 +99,7 @@ const TradeForm = ({
 					<h3>Cash Available:</h3>
 					<h4>$ {cash.toLocaleString()}</h4>
 					<h1>{formBool.toString()}</h1>
+					{formBoolMessage}
 				</div>
 			</div>
 		</div>
