@@ -6,7 +6,10 @@ import {
 	_request,
 	getTickerSuccess,
 	getSearchResults,
-	clearSearchResults
+	clearSearchResults,
+	setFormBool,
+	getFormCoinSuccess,
+	setSelectedCoin
 } from "../actions";
 import Ticker from "../components/Ticker";
 import { buildPageUrl, fuseHelper } from "../helpers";
@@ -24,7 +27,8 @@ class TickerContainer extends Component {
 			getClickedPage,
 			getSearchResults,
 			requestSingleCoinData,
-			clearSearchResults
+			clearSearchResults,
+			tradeCoinOnclick
 		} = this.props;
 		return (
 			<Ticker
@@ -35,6 +39,7 @@ class TickerContainer extends Component {
 				getSearchResults={getSearchResults}
 				requestSingleCoinData={requestSingleCoinData}
 				clearSearchResults={clearSearchResults}
+				tradeCoinOnclick={tradeCoinOnclick}
 			/>
 		);
 	}
@@ -77,6 +82,13 @@ const mapDispatchToProps = dispatch => {
 		clearSearchResults: e => {
 			e.preventDefault();
 			dispatch(clearSearchResults());
+		},
+		tradeCoinOnclick: e => {
+			const coin = e.target.getAttribute("data");
+			const url = `https://api.coinmarketcap.com/v1/ticker/${coin}/`;
+			dispatch(setSelectedCoin(coin));
+			dispatch(setFormBool(true));
+			dispatch(_request(url, getFormCoinSuccess));
 		}
 	};
 };

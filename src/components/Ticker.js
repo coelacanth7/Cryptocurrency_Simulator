@@ -11,7 +11,8 @@ const Ticker = ({
 	getClickedPage,
 	getSearchResults,
 	requestSingleCoinData,
-	clearSearchResults
+	clearSearchResults,
+	tradeCoinOnclick
 }) => {
 	if (isFetching) {
 		return <Spinner />;
@@ -19,7 +20,9 @@ const Ticker = ({
 
 	console.log("coins", coins);
 
-	const coinRows = coins.map(coin => <CoinRow key={coin.symbol} coin={coin} />);
+	const coinRows = coins.map(coin => (
+		<CoinRow onClick={tradeCoinOnclick} key={coin.symbol} coin={coin} />
+	));
 
 	let pagination = "";
 	if (coins.length) {
@@ -64,6 +67,7 @@ const Ticker = ({
 						<th scope="col">Rank</th>
 						<th scope="col">Coin</th>
 						<th scope="col">Price USD</th>
+						<th />
 						<th scope="col">Price BTC</th>
 						<th scope="col">Market Cap $</th>
 						<th scope="col">% change 1h</th>

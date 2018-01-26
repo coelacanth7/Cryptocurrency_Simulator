@@ -70,7 +70,8 @@ export function cryptoReducer(state = initialState, action) {
 		case GET_FORM_COIN_SUCCESS:
 			return {
 				...state,
-				formCoin: action.data[0]
+				formCoin: action.data[0],
+				isFetching: false
 			};
 		default:
 			return state;
