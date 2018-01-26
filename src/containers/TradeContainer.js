@@ -8,7 +8,7 @@ import {
 	getSearchResults,
 	clearSearchResults,
 	_request,
-	getTickerSuccess,
+	getFormCoinSuccess,
 	setSelectedCoin,
 	setFormBool
 } from "../actions";
@@ -22,7 +22,7 @@ class TradeContainer extends Component {
 
 	render() {
 		const {
-			coins,
+			formCoin,
 			cash,
 			makeATrade,
 			validateCoin,
@@ -34,7 +34,7 @@ class TradeContainer extends Component {
 
 		return (
 			<TradeForm
-				coins={coins}
+				formCoin={formCoin}
 				cash={cash}
 				makeATrade={makeATrade}
 				validateCoin={validateCoin}
@@ -49,7 +49,7 @@ class TradeContainer extends Component {
 
 const mapStateToProps = state => {
 	return {
-		coins: state.coins,
+		formCoin: state.formCoin,
 		cash: state.cash,
 		searchResults: state.searchResults,
 		selectedCoin: state.selectedCoin,
@@ -72,23 +72,24 @@ const mapDispatchToProps = (dispatch, ownprops) => {
 				console.log(enteredCoin);
 				if (arrayOfCoinIds.includes(enteredCoin)) {
 					console.log("yes");
+					const url = `https://api.coinmarketcap.com/v1/ticker/${enteredCoin}/`;
 					dispatch(clearSearchResults());
 					dispatch(setFormBool(true));
+					dispatch(_request(url, getFormCoinSuccess));
 				} else {
 					var fuseResults = fuseHelper(enteredCoin);
 					dispatch(getSearchResults(fuseResults));
 					dispatch(setFormBool(false));
 				}
 			}, 3000);
-			// check if coin array includes coin
-			// if not then suggest similar coins
-			// make api call to get coins data
 		},
 		clickACoin: e => {
 			const coin = e.target.getAttribute("data");
+			const url = `https://api.coinmarketcap.com/v1/ticker/${coin}/`;
 			dispatch(clearSearchResults());
 			dispatch(setSelectedCoin(coin));
 			dispatch(setFormBool(true));
+			dispatch(_request(url, getFormCoinSuccess));
 		},
 		dispatchOnLoad: () => {
 			dispatch(clearSearchResults());

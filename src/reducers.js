@@ -6,16 +6,17 @@ import {
 	CLEAR_SEARCH_RESULTS,
 	MAKE_A_TRADE,
 	SET_SELECTED_COIN,
-	SET_FORM_BOOL
+	SET_FORM_BOOL,
+	GET_FORM_COIN_SUCCESS
 } from "./actions";
 
 const initialState = {
 	coins: [],
 	searchResults: [],
 	transactions: [],
-	pendingTransaction: {},
 	cash: 123456,
 	selectedCoin: "",
+	formCoin: {},
 	formBool: true,
 	isFetching: true,
 	error: null
@@ -65,6 +66,11 @@ export function cryptoReducer(state = initialState, action) {
 			return {
 				...state,
 				formBool: action.bool
+			};
+		case GET_FORM_COIN_SUCCESS:
+			return {
+				...state,
+				formCoin: action.data[0]
 			};
 		default:
 			return state;

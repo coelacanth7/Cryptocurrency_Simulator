@@ -6,6 +6,7 @@ export const CLEAR_SEARCH_RESULTS = "CLEAR_SEARCH_RESULTS";
 export const MAKE_A_TRADE = "MAKE_A_TRADE";
 export const SET_SELECTED_COIN = "SET_SELECTED_COIN";
 export const SET_FORM_BOOL = "SET_FORM_BOOL";
+export const GET_FORM_COIN_SUCCESS = "GET_FORM_COIN_SUCCESS";
 
 export function gettingRequest() {
 	return {
@@ -58,6 +59,13 @@ export function setFormBool(bool) {
 	return {
 		type: SET_FORM_BOOL,
 		bool
+	};
+}
+
+export function getFormCoinSuccess(data) {
+	return {
+		type: GET_FORM_COIN_SUCCESS,
+		data
 	};
 }
 

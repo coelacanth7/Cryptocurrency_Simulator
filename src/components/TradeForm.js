@@ -1,7 +1,7 @@
 import React from "react";
 
 const TradeForm = ({
-	coins,
+	formCoin,
 	makeATrade,
 	cash,
 	validateCoin,
@@ -27,6 +27,22 @@ const TradeForm = ({
 	let coinNotFound = "";
 	if (searchResults.length) {
 		coinNotFound = <li>That coin is not found try one of these:</li>;
+	}
+
+	let price = "";
+	if (Object.keys(formCoin).length) {
+		var inputValue = `${formCoin.name} $${formCoin.price_usd}`;
+		price = (
+			<div className="form-group">
+				<label>Coin price:</label>
+				<input
+					type="text"
+					value={inputValue}
+					className="form-control"
+					disabled
+				/>
+			</div>
+		);
 	}
 
 	return (
@@ -69,6 +85,7 @@ const TradeForm = ({
 								placeholder="1000"
 							/>
 						</div>
+						{price}
 						<button
 							type="submit"
 							className="btn btn-secondary btn-lg btn-block"
