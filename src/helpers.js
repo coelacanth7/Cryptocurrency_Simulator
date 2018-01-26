@@ -13,10 +13,10 @@ var options = {
 
 export const fuseHelper = data => {
 	var fuse = new Fuse(arrayOfCoinIds, options);
-	var result = fuse.search(data.query).slice(0, 8);
+	var result = fuse.search(data).slice(0, 8);
 	var arrayOfResults = result.map(indeces => arrayOfCoinIds[indeces]);
 	if (arrayOfResults.length === 0) {
-		arrayOfResults = ["sorry no results"];
+		arrayOfResults = ["sorry nothing found"];
 	}
 	return arrayOfResults;
 };

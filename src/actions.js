@@ -4,6 +4,8 @@ export const GET_REQUEST_FAILURE = "GET_REQUEST_FAILURE";
 export const GET_SEARCH_RESULTS = "GET_SEARCH_RESULTS";
 export const CLEAR_SEARCH_RESULTS = "CLEAR_SEARCH_RESULTS";
 export const MAKE_A_TRADE = "MAKE_A_TRADE";
+export const SET_SELECTED_COIN = "SET_SELECTED_COIN";
+export const SET_FORM_BOOL = "SET_FORM_BOOL";
 
 export function gettingRequest() {
 	return {
@@ -42,6 +44,20 @@ export function makeATrade(data) {
 	return {
 		type: MAKE_A_TRADE,
 		data
+	};
+}
+
+export function setSelectedCoin(coin) {
+	return {
+		type: SET_SELECTED_COIN,
+		coin
+	};
+}
+
+export function setFormBool(bool) {
+	return {
+		type: SET_FORM_BOOL,
+		bool
 	};
 }
 

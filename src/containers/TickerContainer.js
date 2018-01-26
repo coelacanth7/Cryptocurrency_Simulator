@@ -65,13 +65,14 @@ const mapDispatchToProps = dispatch => {
 			e.preventDefault();
 			const form = e.target;
 			const data = serialize(form, { hash: true });
-			var fuseResults = fuseHelper(data);
+			var fuseResults = fuseHelper(data.query);
 			dispatch(getSearchResults(fuseResults));
 		},
 		requestSingleCoinData: e => {
 			const coin = e.target.getAttribute("data");
 			const url = `https://api.coinmarketcap.com/v1/ticker/${coin}/`;
 			dispatch(_request(url, getTickerSuccess));
+			dispatch(clearSearchResults());
 		},
 		clearSearchResults: e => {
 			e.preventDefault();
