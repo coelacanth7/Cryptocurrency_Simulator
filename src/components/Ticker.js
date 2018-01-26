@@ -2,6 +2,7 @@ import React from "react";
 import { paginationConditionals } from "../helpers";
 import SearchForm from "./elements/SearchForm";
 import CoinRow from "./elements/CoinRow";
+import Spinner from "./elements/Spinner";
 
 const Ticker = ({
 	coins,
@@ -13,7 +14,7 @@ const Ticker = ({
 	clearSearchResults
 }) => {
 	if (isFetching) {
-		return <h1>Loading film...</h1>;
+		return <Spinner />;
 	}
 
 	console.log("coins", coins);

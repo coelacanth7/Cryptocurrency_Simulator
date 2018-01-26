@@ -1,7 +1,7 @@
 import React from "react";
 
 const CoinRow = ({ coin }) => (
-	<tr>
+	<tr data={JSON.stringify(coin)}>
 		<th scope="row">{coin.rank}</th>
 		<td>{coin.name}</td>
 		<td>$ {coin.price_usd}</td>

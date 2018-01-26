@@ -13,13 +13,17 @@ const SearchForm = ({ getSearchResults, clearSearchResults }) => {
 					/>
 				</div>
 				<div className="col">
-					<input type="submit" className="form-control btn btn-success" />
+					<input
+						type="submit"
+						value="Search"
+						className="form-control btn btn-success"
+					/>
 				</div>
 				<div className="col">
 					<input
 						type="button"
 						className="form-control btn btn-success"
-						value="clear search"
+						value="Clear Search"
 						onClick={clearSearchResults}
 					/>
 				</div>

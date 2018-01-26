@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Navbar from "./Navbar";
 import TickerContainer from "../containers/TickerContainer";
+import TradeContainer from "../containers/TradeContainer";
 
 class App extends Component {
 	render() {
@@ -13,7 +14,7 @@ class App extends Component {
 					<Navbar />
 					<Switch>
 						<Route exact path="/" component={TickerContainer} />
-						<Route path="/trade" render={() => <h1>trade</h1>} />
+						<Route path="/trade" component={TradeContainer} />
 						<Route path="/transactions" render={() => <h1>transactions</h1>} />
 						<Route path="/portfolio" render={() => <h1>portfolio</h1>} />
 						<Route render={() => <h1>Page not found</h1>} />

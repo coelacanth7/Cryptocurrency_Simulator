@@ -15,9 +15,9 @@ export const fuseHelper = data => {
 	var fuse = new Fuse(arrayOfCoinIds, options);
 	var result = fuse.search(data.query).slice(0, 8);
 	var arrayOfResults = result.map(indeces => arrayOfCoinIds[indeces]);
-	arrayOfResults.length === 0
-		? (arrayOfResults = ["sorry no results"])
-		: arrayOfResults;
+	if (arrayOfResults.length === 0) {
+		arrayOfResults = ["sorry no results"];
+	}
 	return arrayOfResults;
 };
 
@@ -46,7 +46,7 @@ export const paginationConditionals = (coins, getClickedPage) => {
 		</li>
 	);
 
-	if (coins[0].rank == 1) {
+	if (coins[0].rank === "1") {
 		page.nextPage = nextPage;
 		return page;
 	}
