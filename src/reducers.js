@@ -7,7 +7,8 @@ import {
 	MAKE_A_TRADE,
 	SET_SELECTED_COIN,
 	SET_FORM_BOOL,
-	GET_FORM_COIN_SUCCESS
+	GET_FORM_COIN_SUCCESS,
+	UPDATE_AMOUNT
 } from "./actions";
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
 	formCoin: {},
 	formBool: true,
 	formBoolMessage: "",
+	amount: 0,
 	isFetching: true,
 	error: null
 };
@@ -74,6 +76,11 @@ export function cryptoReducer(state = initialState, action) {
 				...state,
 				formCoin: action.data[0],
 				isFetching: false
+			};
+		case UPDATE_AMOUNT:
+			return {
+				...state,
+				amount: action.amount
 			};
 		default:
 			return state;

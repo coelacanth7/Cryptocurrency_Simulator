@@ -9,7 +9,9 @@ const TradeForm = ({
 	clickACoin,
 	selectedCoin,
 	formBool,
-	formBoolMessage
+	formBoolMessage,
+	changeAmount,
+	amount
 }) => {
 	let searchListItems = "";
 	if (searchResults.length) {
@@ -32,14 +34,32 @@ const TradeForm = ({
 
 	let price = "";
 	if (Object.keys(formCoin).length) {
-		var inputValue = `${formCoin.name} $${formCoin.price_usd}`;
+		let inputValue = `${formCoin.name} $${formCoin.price_usd}`;
 		price = (
 			<div className="form-group">
 				<label>Coin price:</label>
 				<input
 					type="text"
+					value={Number(formCoin.price_usd)}
+					className="form-control"
+					name="price"
+					disabled
+				/>
+			</div>
+		);
+	}
+
+	let coinAmount = "";
+	if (Object.keys(formCoin).length && amount) {
+		let inputValue = amount / Number(formCoin.price_usd);
+		coinAmount = (
+			<div className="form-group">
+				<label>Coin amount:</label>
+				<input
+					type="text"
 					value={inputValue}
 					className="form-control"
+					name="amount"
 					disabled
 				/>
 			</div>
@@ -50,17 +70,16 @@ const TradeForm = ({
 		<div className="container-fluid">
 			<div className="row">
 				<div className="col-md-8">
-					<form>
+					<form onSubmit={makeATrade}>
 						<div className="form-group">
 							<label htmlFor="coinInput">Coin:</label>
-
 							<input
 								onChange={validateCoin}
 								type="text"
 								id="coinInput"
 								className="form-control"
 								placeholder="bitcoin"
-								name="enteredCoin"
+								name="coin"
 								value={selectedCoin}
 							/>
 						</div>
@@ -70,7 +89,7 @@ const TradeForm = ({
 						</ul>
 						<div className="form-group">
 							<label htmlFor="buysellselect">BUY / SELL</label>
-							<select id="buysellselect" className="form-control">
+							<select id="buysellselect" className="form-control" name="type">
 								<option defaultValue value="buy">
 									BUY
 								</option>
@@ -84,9 +103,14 @@ const TradeForm = ({
 								id="cashToInvest"
 								className="form-control"
 								placeholder="1000"
+								name="amount"
+								value={amount ? amount : ""}
+								onChange={changeAmount}
 							/>
 						</div>
+						<input type="hidden" value={Date.now()} name="date" />
 						{price}
+						{coinAmount}
 						<button
 							type="submit"
 							className="btn btn-secondary btn-lg btn-block"

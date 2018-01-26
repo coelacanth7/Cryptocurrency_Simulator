@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
 	return (
-		<nav className="navbar navbar-expand-sm navbar-light bg-light">
+		<nav className="navbar navbar-expand-sm navbar-dark bg-dark">
 			<NavLink activeClassName="active" className="navbar-brand" exact to="/">
 				Market
 			</NavLink>

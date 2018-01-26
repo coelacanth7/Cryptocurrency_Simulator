@@ -7,6 +7,7 @@ export const MAKE_A_TRADE = "MAKE_A_TRADE";
 export const SET_SELECTED_COIN = "SET_SELECTED_COIN";
 export const SET_FORM_BOOL = "SET_FORM_BOOL";
 export const GET_FORM_COIN_SUCCESS = "GET_FORM_COIN_SUCCESS";
+export const UPDATE_AMOUNT = "UPDATE_AMOUNT";
 
 export function gettingRequest() {
 	return {
@@ -67,6 +68,13 @@ export function getFormCoinSuccess(data) {
 	return {
 		type: GET_FORM_COIN_SUCCESS,
 		data
+	};
+}
+
+export function updateAmount(amount) {
+	return {
+		type: UPDATE_AMOUNT,
+		amount
 	};
 }
 

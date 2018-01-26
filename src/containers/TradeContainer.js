@@ -10,7 +10,8 @@ import {
 	_request,
 	getFormCoinSuccess,
 	setSelectedCoin,
-	setFormBool
+	setFormBool,
+	updateAmount
 } from "../actions";
 import { fuseHelper } from "../helpers";
 import { arrayOfCoinIds } from "../arrayOfCoinIds";
@@ -30,7 +31,9 @@ class TradeContainer extends Component {
 			clickACoin,
 			selectedCoin,
 			formBool,
-			formBoolMessage
+			formBoolMessage,
+			changeAmount,
+			amount
 		} = this.props;
 
 		return (
@@ -44,6 +47,8 @@ class TradeContainer extends Component {
 				selectedCoin={selectedCoin}
 				formBool={formBool}
 				formBoolMessage={formBoolMessage}
+				changeAmount={changeAmount}
+				amount={amount}
 			/>
 		);
 	}
@@ -56,15 +61,20 @@ const mapStateToProps = state => {
 		searchResults: state.searchResults,
 		selectedCoin: state.selectedCoin,
 		formBool: state.formBool,
-		formBoolMessage: state.formBoolMessage
+		formBoolMessage: state.formBoolMessage,
+		amount: state.amount
 	};
 };
 
 var timeout = null;
 const mapDispatchToProps = (dispatch, ownprops) => {
 	return {
-		makeATrade: () => {
-			dispatch(makeATrade());
+		makeATrade: e => {
+			e.preventDefault();
+			const form = e.target;
+			const data = serialize(form, { hash: true });
+			console.log("data from form", data);
+			// dispatch(makeATrade());
 		},
 		validateCoin: e => {
 			e.preventDefault();
@@ -96,6 +106,12 @@ const mapDispatchToProps = (dispatch, ownprops) => {
 		},
 		dispatchOnLoad: () => {
 			dispatch(clearSearchResults());
+		},
+		changeAmount: e => {
+			e.preventDefault();
+			const amount = e.target.value;
+			console.log(amount);
+			dispatch(updateAmount(amount));
 		}
 	};
 };
