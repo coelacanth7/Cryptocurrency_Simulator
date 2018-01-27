@@ -11,6 +11,20 @@ var options = {
 	minMatchCharLength: 2
 };
 
+export const moneyFormatter = number => {
+	if (typeof number === "string") {
+		Number(number);
+	}
+
+	var formatter = new Intl.NumberFormat("en-US", {
+		style: "currency",
+		currency: "USD",
+		minimumFractionDigits: 2
+	});
+
+	return formatter.format(number);
+};
+
 export const fuseHelper = data => {
 	var fuse = new Fuse(arrayOfCoinIds, options);
 	var result = fuse.search(data).slice(0, 8);

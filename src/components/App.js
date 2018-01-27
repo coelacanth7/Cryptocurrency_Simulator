@@ -6,6 +6,7 @@ import Navbar from "./Navbar";
 import TickerContainer from "../containers/TickerContainer";
 import TradeContainer from "../containers/TradeContainer";
 import TransactionContainer from "../containers/TransactionContainer";
+import PortfolioContainer from "../containers/PortfolioContainer";
 
 class App extends Component {
 	render() {
@@ -17,7 +18,7 @@ class App extends Component {
 						<Route exact path="/" component={TickerContainer} />
 						<Route path="/trade" component={TradeContainer} />
 						<Route path="/transactions" component={TransactionContainer} />
-						<Route path="/portfolio" render={() => <h1>portfolio</h1>} />
+						<Route path="/portfolio" component={PortfolioContainer} />
 						<Route render={() => <h1>Page not found</h1>} />
 					</Switch>
 				</div>

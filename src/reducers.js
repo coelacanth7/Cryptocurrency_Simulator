@@ -10,7 +10,9 @@ import {
 	GET_FORM_COIN_SUCCESS,
 	VALIDATE_AMOUNT,
 	RECIEVE_TRANSACTION_PAGE,
-	UPDATE_BUY_SELL
+	UPDATE_BUY_SELL,
+	GET_PORTFOLIO_SUCCESS,
+	CLEAR_PORTFOLIO
 } from "./actions";
 
 const initialState = {
@@ -50,6 +52,7 @@ const initialState = {
 	amount: 0,
 	buySell: "buy",
 	formSubmitRedirect: false,
+	portfolio: [],
 	isFetching: true,
 	error: null
 };
@@ -152,6 +155,41 @@ export function cryptoReducer(state = initialState, action) {
 			return {
 				...state,
 				buySell: action.data
+			};
+		case CLEAR_PORTFOLIO:
+			return {
+				...state,
+				portfolio: []
+			};
+		case GET_PORTFOLIO_SUCCESS:
+			let releventTransaction = state.transactions.filter(obj => {
+				if (obj.coin === action.data[0].id) {
+					return obj;
+				}
+			})[0];
+
+			let currentValue =
+				action.data[0].price_usd * releventTransaction.coinAmount;
+			let profitOrLoss =
+				action.data[0].price_usd * releventTransaction.coinAmount -
+				releventTransaction.coinAmount * releventTransaction.coinPrice;
+
+			return {
+				...state,
+				portfolio: [
+					...state.portfolio,
+					Object.assign(
+						{},
+						{
+							coin: action.data[0].id,
+							quantity: releventTransaction.coinAmount,
+							costBasis: releventTransaction.coinPrice,
+							currentPrice: action.data[0].price_usd,
+							currentValue: currentValue,
+							profitOrLoss: profitOrLoss
+						}
+					)
+				]
 			};
 		default:
 			return state;

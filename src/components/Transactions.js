@@ -1,7 +1,7 @@
 import React from "react";
 import TransactionRow from "./elements/TransactionRow";
 
-const Transactions = ({ transactions, cash }) => {
+const Transactions = ({ transactions }) => {
 	if (!transactions.length) {
 		return <h1>No Transactions yet</h1>;
 	}

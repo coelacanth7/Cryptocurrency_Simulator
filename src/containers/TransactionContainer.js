@@ -16,8 +16,7 @@ class TransactionContainer extends Component {
 
 const mapStateToProps = state => {
 	return {
-		transactions: state.transactions,
-		cash: state.cash
+		transactions: state.transactions
 	};
 };
 

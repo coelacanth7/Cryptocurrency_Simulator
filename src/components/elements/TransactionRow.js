@@ -1,5 +1,5 @@
 import React from "react";
-import { capitalizeFirstLetter } from "../../helpers";
+import { capitalizeFirstLetter, moneyFormatter } from "../../helpers";
 
 const TransactionRow = ({ transaction }) => {
 	let coin = capitalizeFirstLetter(transaction.coin);
@@ -12,8 +12,8 @@ const TransactionRow = ({ transaction }) => {
 			<th scope="row">{date}</th>
 			<td>{coin}</td>
 			<td>{transaction.type.toUpperCase()}</td>
-			<td>${transaction.usdAmount}</td>
-			<td>${transaction.coinPrice}</td>
+			<td>{moneyFormatter(transaction.usdAmount)}</td>
+			<td>{moneyFormatter(transaction.coinPrice)}</td>
 			<td>{transaction.coinAmount}</td>
 		</tr>
 	);

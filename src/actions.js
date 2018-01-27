@@ -10,6 +10,8 @@ export const GET_FORM_COIN_SUCCESS = "GET_FORM_COIN_SUCCESS";
 export const VALIDATE_AMOUNT = "VALIDATE_AMOUNT";
 export const RECIEVE_TRANSACTION_PAGE = "RECIEVE_TRANSACTION_PAGE";
 export const UPDATE_BUY_SELL = "UPDATE_BUY_SELL";
+export const GET_PORTFOLIO_SUCCESS = "GET_PORTFOLIO_SUCCESS";
+export const CLEAR_PORTFOLIO = "CLEAR_PORTFOLIO";
 
 export function gettingRequest() {
 	return {
@@ -90,6 +92,19 @@ export function updateBuySell(data) {
 	return {
 		type: UPDATE_BUY_SELL,
 		data
+	};
+}
+
+export function getPortfolioSuccess(data) {
+	return {
+		type: GET_PORTFOLIO_SUCCESS,
+		data
+	};
+}
+
+export function clearPortfolio() {
+	return {
+		type: CLEAR_PORTFOLIO
 	};
 }
 
