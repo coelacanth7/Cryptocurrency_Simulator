@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { recieveTransactionPage } from "../actions";
+import Transactions from "../components/Transactions";
 
 class TransactionContainer extends Component {
 	componentWillMount() {
@@ -9,7 +10,7 @@ class TransactionContainer extends Component {
 	}
 
 	render() {
-		return <h1>TRANSACTION</h1>;
+		return <Transactions {...this.props} />;
 	}
 }
 
