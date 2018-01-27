@@ -11,9 +11,11 @@ const TradeForm = ({
 	selectedCoin,
 	formBool,
 	formBoolMessage,
-	changeAmount,
+	validateAmount,
 	amount,
-	formSubmitRedirect
+	formSubmitRedirect,
+	onChangeBuySell,
+	buySell
 }) => {
 	let coinNotFound = "";
 	if (searchResults.length) {
@@ -59,7 +61,12 @@ const TradeForm = ({
 						</ul>
 						<div className="form-group">
 							<label htmlFor="buysellselect">BUY / SELL</label>
-							<select id="buysellselect" className="form-control" name="type">
+							<select
+								className="form-control"
+								name="type"
+								onChange={onChangeBuySell}
+								value={buySell}
+							>
 								<option defaultValue value="buy">
 									BUY
 								</option>
@@ -75,7 +82,7 @@ const TradeForm = ({
 								placeholder="1000"
 								name="amount"
 								value={amount ? amount : ""}
-								onChange={changeAmount}
+								onChange={validateAmount}
 							/>
 						</div>
 						<div className="form-group">
@@ -106,11 +113,14 @@ const TradeForm = ({
 						</div>
 						<input type="hidden" value={Date.now()} name="date" />
 
-						<input
-							type="submit"
-							className="btn btn-secondary btn-lg btn-block"
-							value="MAKE TRANSACTION"
-						/>
+						{formBool &&
+							selectedCoin && (
+								<input
+									type="submit"
+									className="btn btn-secondary btn-lg btn-block"
+									value="MAKE TRANSACTION"
+								/>
+							)}
 
 						{formSubmitRedirect && <Redirect to={from || "/transactions"} />}
 					</form>
@@ -118,7 +128,7 @@ const TradeForm = ({
 				<div className="col-md-4 border">
 					<h3>Cash Available</h3>
 					<h4>$ {cash.toLocaleString()}</h4>
-					<h1>{formBool ? "Valid" : "Invalid"}</h1>
+					<h1>{formBool && selectedCoin.length ? "Valid" : "Invalid"}</h1>
 					{formBoolMessage}
 				</div>
 			</div>

@@ -7,8 +7,9 @@ export const MAKE_A_TRADE = "MAKE_A_TRADE";
 export const SET_SELECTED_COIN = "SET_SELECTED_COIN";
 export const SET_FORM_BOOL = "SET_FORM_BOOL";
 export const GET_FORM_COIN_SUCCESS = "GET_FORM_COIN_SUCCESS";
-export const UPDATE_AMOUNT = "UPDATE_AMOUNT";
+export const VALIDATE_AMOUNT = "VALIDATE_AMOUNT";
 export const RECIEVE_TRANSACTION_PAGE = "RECIEVE_TRANSACTION_PAGE";
+export const UPDATE_BUY_SELL = "UPDATE_BUY_SELL";
 
 export function gettingRequest() {
 	return {
@@ -72,9 +73,9 @@ export function getFormCoinSuccess(data) {
 	};
 }
 
-export function updateAmount(amount) {
+export function validateAmount(amount) {
 	return {
-		type: UPDATE_AMOUNT,
+		type: VALIDATE_AMOUNT,
 		amount
 	};
 }
@@ -82,6 +83,13 @@ export function updateAmount(amount) {
 export function recieveTransactionPage() {
 	return {
 		type: RECIEVE_TRANSACTION_PAGE
+	};
+}
+
+export function updateBuySell(data) {
+	return {
+		type: UPDATE_BUY_SELL,
+		data
 	};
 }
 

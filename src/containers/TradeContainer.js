@@ -11,7 +11,8 @@ import {
 	getFormCoinSuccess,
 	setSelectedCoin,
 	setFormBool,
-	updateAmount
+	validateAmount,
+	updateBuySell
 } from "../actions";
 import { fuseHelper } from "../helpers";
 import { arrayOfCoinIds } from "../arrayOfCoinIds";
@@ -35,7 +36,8 @@ const mapStateToProps = state => {
 		formBool: state.formBool,
 		formBoolMessage: state.formBoolMessage,
 		amount: state.amount,
-		formSubmitRedirect: state.formSubmitRedirect
+		formSubmitRedirect: state.formSubmitRedirect,
+		buySell: state.buySell
 	};
 };
 
@@ -61,7 +63,7 @@ const mapDispatchToProps = (dispatch, ownprops) => {
 					console.log("yes");
 					const url = `https://api.coinmarketcap.com/v1/ticker/${coin}/`;
 					dispatch(clearSearchResults());
-					dispatch(setFormBool(true));
+					// dispatch(setFormBool(true));
 					dispatch(_request(url, getFormCoinSuccess));
 				} else {
 					var fuseResults = fuseHelper(coin);
@@ -71,12 +73,19 @@ const mapDispatchToProps = (dispatch, ownprops) => {
 			}, 1000);
 		},
 
+		validateAmount: e => {
+			e.preventDefault();
+			const amount = e.target.value;
+			console.log(amount);
+			dispatch(validateAmount(amount));
+		},
+
 		clickACoin: e => {
 			const coin = e.target.getAttribute("data");
 			const url = `https://api.coinmarketcap.com/v1/ticker/${coin}/`;
 			dispatch(clearSearchResults());
 			dispatch(setSelectedCoin(coin));
-			dispatch(setFormBool(true));
+			// dispatch(setFormBool(true));
 			dispatch(_request(url, getFormCoinSuccess));
 		},
 
@@ -84,11 +93,9 @@ const mapDispatchToProps = (dispatch, ownprops) => {
 			dispatch(clearSearchResults());
 		},
 
-		changeAmount: e => {
-			e.preventDefault();
-			const amount = e.target.value;
-			console.log(amount);
-			dispatch(updateAmount(amount));
+		onChangeBuySell: e => {
+			const buySell = e.target.value;
+			dispatch(updateBuySell(buySell));
 		}
 	};
 };

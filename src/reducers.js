@@ -8,8 +8,9 @@ import {
 	SET_SELECTED_COIN,
 	SET_FORM_BOOL,
 	GET_FORM_COIN_SUCCESS,
-	UPDATE_AMOUNT,
-	RECIEVE_TRANSACTION_PAGE
+	VALIDATE_AMOUNT,
+	RECIEVE_TRANSACTION_PAGE,
+	UPDATE_BUY_SELL
 } from "./actions";
 
 const initialState = {
@@ -19,9 +20,10 @@ const initialState = {
 	cash: 123456,
 	selectedCoin: "",
 	formCoin: {},
-	formBool: true,
+	formBool: false,
 	formBoolMessage: "",
 	amount: 0,
+	buySell: "buy",
 	formSubmitRedirect: false,
 	isFetching: true,
 	error: null
@@ -93,15 +95,33 @@ export function cryptoReducer(state = initialState, action) {
 				formCoin: action.data[0],
 				isFetching: false
 			};
-		case UPDATE_AMOUNT:
+		case VALIDATE_AMOUNT:
+			let formBool;
+			let formBoolMessage;
+			if (state.buySell === "buy") {
+				if (state.cash >= action.amount) {
+					formBool = true;
+					formBoolMessage = "";
+				} else {
+					formBool = false;
+					formBoolMessage = "You don't have enough cash for that";
+				}
+			}
 			return {
 				...state,
-				amount: action.amount
+				amount: action.amount,
+				formBool,
+				formBoolMessage
 			};
 		case RECIEVE_TRANSACTION_PAGE:
 			return {
 				...state,
 				formSubmitRedirect: false
+			};
+		case UPDATE_BUY_SELL:
+			return {
+				...state,
+				buySell: action.data
 			};
 		default:
 			return state;
