@@ -16,8 +16,33 @@ import {
 const initialState = {
 	coins: [],
 	searchResults: [],
-	transactions: [],
-	cash: 123456,
+	transactions: [
+		{
+			coin: "bitcoin",
+			coinAmount: 0.08960894655722428,
+			coinPrice: "11159.6",
+			date: "1517027486466",
+			type: "buy",
+			usdAmount: "1000"
+		},
+		{
+			coin: "litecoin",
+			coinAmount: 5.660719137759261,
+			coinPrice: "176.656",
+			date: "1517027862220",
+			type: "buy",
+			usdAmount: "1000"
+		},
+		{
+			coin: "eos",
+			coinAmount: 69.89438957734863,
+			coinPrice: "14.3073",
+			date: "1517027714979",
+			type: "buy",
+			usdAmount: "1000"
+		}
+	],
+	cash: 100000,
 	selectedCoin: "",
 	formCoin: {},
 	formBool: false,
@@ -60,9 +85,14 @@ export function cryptoReducer(state = initialState, action) {
 				searchResults: []
 			};
 		case MAKE_A_TRADE:
+			let cash = state.cash - action.data.amount;
 			return {
 				...state,
 				formSubmitRedirect: true,
+				selectedCoin: "",
+				formCoin: {},
+				amount: 0,
+				cash: cash,
 				transactions: [
 					...state.transactions,
 					Object.assign(
