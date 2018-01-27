@@ -2,7 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import Portfolio from "../components/Portfolio";
-import { _request, getPortfolioSuccess, clearPortfolio } from "../actions";
+import {
+	_request,
+	getPortfolioSuccess,
+	clearPortfolio,
+	setSelectedCoin,
+	setFormBool,
+	getFormCoinSuccess
+} from "../actions";
 
 class PortfolioContainer extends Component {
 	componentWillMount() {
@@ -32,6 +39,14 @@ const mapDispatchToProps = dispatch => {
 				}/`;
 				dispatch(_request(url, getPortfolioSuccess));
 			});
+		},
+
+		tradeCoinOnclick: e => {
+			const coin = e.target.getAttribute("data");
+			const url = `https://api.coinmarketcap.com/v1/ticker/${coin}/`;
+			dispatch(setSelectedCoin(coin));
+			dispatch(setFormBool(true));
+			dispatch(_request(url, getFormCoinSuccess));
 		}
 	};
 };
