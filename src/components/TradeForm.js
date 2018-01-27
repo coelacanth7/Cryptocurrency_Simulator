@@ -1,4 +1,6 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
+import { Redirect } from "react-router";
 
 const TradeForm = ({
 	formCoin,
@@ -13,7 +15,8 @@ const TradeForm = ({
 	formBoolMessage,
 	changeAmount,
 	amount,
-	onChangecoinAmountInputValue
+	onChangecoinAmountInputValue,
+	formSubmitRedirect
 }) => {
 	let searchListItems = "";
 	if (searchResults.length) {
@@ -33,6 +36,8 @@ const TradeForm = ({
 	if (searchResults.length) {
 		coinNotFound = <li>That coin is not found try one of these:</li>;
 	}
+
+	const { from } = "/";
 
 	return (
 		<div className="container-fluid">
@@ -103,11 +108,14 @@ const TradeForm = ({
 							/>
 						</div>
 						<input type="hidden" value={Date.now()} name="date" />
+
 						<input
 							type="submit"
 							className="btn btn-secondary btn-lg btn-block"
 							value="MAKE TRANSACTION"
 						/>
+
+						{formSubmitRedirect && <Redirect to={from || "/transactions"} />}
 					</form>
 				</div>
 				<div className="col-md-4">

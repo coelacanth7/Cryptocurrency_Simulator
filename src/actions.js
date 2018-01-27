@@ -8,6 +8,7 @@ export const SET_SELECTED_COIN = "SET_SELECTED_COIN";
 export const SET_FORM_BOOL = "SET_FORM_BOOL";
 export const GET_FORM_COIN_SUCCESS = "GET_FORM_COIN_SUCCESS";
 export const UPDATE_AMOUNT = "UPDATE_AMOUNT";
+export const RECIEVE_TRANSACTION_PAGE = "RECIEVE_TRANSACTION_PAGE";
 
 export function gettingRequest() {
 	return {
@@ -75,6 +76,12 @@ export function updateAmount(amount) {
 	return {
 		type: UPDATE_AMOUNT,
 		amount
+	};
+}
+
+export function recieveTransactionPage() {
+	return {
+		type: RECIEVE_TRANSACTION_PAGE
 	};
 }
 

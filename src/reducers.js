@@ -8,7 +8,8 @@ import {
 	SET_SELECTED_COIN,
 	SET_FORM_BOOL,
 	GET_FORM_COIN_SUCCESS,
-	UPDATE_AMOUNT
+	UPDATE_AMOUNT,
+	RECIEVE_TRANSACTION_PAGE
 } from "./actions";
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
 	formBool: true,
 	formBoolMessage: "",
 	amount: 0,
+	formSubmitRedirect: false,
 	isFetching: true,
 	error: null
 };
@@ -59,6 +61,7 @@ export function cryptoReducer(state = initialState, action) {
 		case MAKE_A_TRADE:
 			return {
 				...state,
+				formSubmitRedirect: true,
 				transactions: [
 					...state.transactions,
 					Object.assign(
@@ -96,6 +99,11 @@ export function cryptoReducer(state = initialState, action) {
 			return {
 				...state,
 				amount: action.amount
+			};
+		case RECIEVE_TRANSACTION_PAGE:
+			return {
+				...state,
+				formSubmitRedirect: false
 			};
 		default:
 			return state;
