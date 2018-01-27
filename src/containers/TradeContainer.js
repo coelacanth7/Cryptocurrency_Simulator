@@ -22,41 +22,14 @@ class TradeContainer extends Component {
 	}
 
 	render() {
-		const {
-			formCoin,
-			cash,
-			makeATrade,
-			validateCoin,
-			searchResults,
-			clickACoin,
-			selectedCoin,
-			formBool,
-			formBoolMessage,
-			changeAmount,
-			amount
-		} = this.props;
-
-		return (
-			<TradeForm
-				formCoin={formCoin}
-				cash={cash}
-				makeATrade={makeATrade}
-				validateCoin={validateCoin}
-				searchResults={searchResults}
-				clickACoin={clickACoin}
-				selectedCoin={selectedCoin}
-				formBool={formBool}
-				formBoolMessage={formBoolMessage}
-				changeAmount={changeAmount}
-				amount={amount}
-			/>
-		);
+		return <TradeForm {...this.props} />;
 	}
 }
 
 const mapStateToProps = state => {
 	return {
 		formCoin: state.formCoin,
+		formCoinprice_usd: state.formCoinprice_usd,
 		cash: state.cash,
 		searchResults: state.searchResults,
 		selectedCoin: state.selectedCoin,
@@ -73,28 +46,28 @@ const mapDispatchToProps = (dispatch, ownprops) => {
 			e.preventDefault();
 			const form = e.target;
 			const data = serialize(form, { hash: true });
-			console.log("data from form", data);
-			// dispatch(makeATrade());
+			console.log(data);
+			dispatch(makeATrade(data));
 		},
 		validateCoin: e => {
 			e.preventDefault();
-			const enteredCoin = e.target.value.toLowerCase();
-			dispatch(setSelectedCoin(enteredCoin));
+			const coin = e.target.value.toLowerCase();
+			dispatch(setSelectedCoin(coin));
 			clearTimeout(timeout);
 			timeout = setTimeout(() => {
-				console.log(enteredCoin);
-				if (arrayOfCoinIds.includes(enteredCoin)) {
+				console.log(coin);
+				if (arrayOfCoinIds.includes(coin)) {
 					console.log("yes");
-					const url = `https://api.coinmarketcap.com/v1/ticker/${enteredCoin}/`;
+					const url = `https://api.coinmarketcap.com/v1/ticker/${coin}/`;
 					dispatch(clearSearchResults());
 					dispatch(setFormBool(true));
 					dispatch(_request(url, getFormCoinSuccess));
 				} else {
-					var fuseResults = fuseHelper(enteredCoin);
+					var fuseResults = fuseHelper(coin);
 					dispatch(getSearchResults(fuseResults));
 					dispatch(setFormBool(false, "coin selection is no good"));
 				}
-			}, 3000);
+			}, 500);
 		},
 		clickACoin: e => {
 			const coin = e.target.getAttribute("data");
@@ -112,6 +85,10 @@ const mapDispatchToProps = (dispatch, ownprops) => {
 			const amount = e.target.value;
 			console.log(amount);
 			dispatch(updateAmount(amount));
+		},
+		onChangecoinAmountInputValue: e => {
+			const input = e.target;
+			console.log("onChangecoinAmountInputValue");
 		}
 	};
 };

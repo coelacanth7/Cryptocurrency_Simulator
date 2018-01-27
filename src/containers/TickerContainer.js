@@ -20,28 +20,7 @@ class TickerContainer extends Component {
 	}
 
 	render() {
-		const {
-			coins,
-			isFetching,
-			searchResults,
-			getClickedPage,
-			getSearchResults,
-			requestSingleCoinData,
-			clearSearchResults,
-			tradeCoinOnclick
-		} = this.props;
-		return (
-			<Ticker
-				coins={coins}
-				isFetching={isFetching}
-				searchResults={searchResults}
-				getClickedPage={getClickedPage}
-				getSearchResults={getSearchResults}
-				requestSingleCoinData={requestSingleCoinData}
-				clearSearchResults={clearSearchResults}
-				tradeCoinOnclick={tradeCoinOnclick}
-			/>
-		);
+		return <Ticker {...this.props} />;
 	}
 }
 
