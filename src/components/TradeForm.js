@@ -1,10 +1,8 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import { Redirect } from "react-router";
 
 const TradeForm = ({
 	formCoin,
-	formCoinprice_usd,
 	makeATrade,
 	cash,
 	validateCoin,
@@ -15,9 +13,13 @@ const TradeForm = ({
 	formBoolMessage,
 	changeAmount,
 	amount,
-	onChangecoinAmountInputValue,
 	formSubmitRedirect
 }) => {
+	let coinNotFound = "";
+	if (searchResults.length) {
+		coinNotFound = <li>That coin is not found try one of these:</li>;
+	}
+
 	let searchListItems = "";
 	if (searchResults.length) {
 		searchListItems = searchResults.map(coinId => (
@@ -30,11 +32,6 @@ const TradeForm = ({
 				{coinId}
 			</li>
 		));
-	}
-
-	let coinNotFound = "";
-	if (searchResults.length) {
-		coinNotFound = <li>That coin is not found try one of these:</li>;
 	}
 
 	const { from } = "/";
@@ -85,7 +82,7 @@ const TradeForm = ({
 							<label htlmfor="coinPriceInput">Coin price:</label>
 							<input
 								type="number"
-								value={formCoinprice_usd ? formCoinprice_usd : 0}
+								value={formCoin.price_usd ? formCoin.price_usd : 0}
 								className="form-control"
 								name="price"
 								id="coinPriceInput"
@@ -98,7 +95,7 @@ const TradeForm = ({
 							<input
 								type="number"
 								value={
-									formCoinprice_usd ? amount / Number(formCoinprice_usd) : 0
+									formCoin.price_usd ? amount / Number(formCoin.price_usd) : 0
 								}
 								className="form-control"
 								onChange={validateCoin}
@@ -118,10 +115,10 @@ const TradeForm = ({
 						{formSubmitRedirect && <Redirect to={from || "/transactions"} />}
 					</form>
 				</div>
-				<div className="col-md-4">
-					<h3>Cash Available:</h3>
+				<div className="col-md-4 border">
+					<h3>Cash Available</h3>
 					<h4>$ {cash.toLocaleString()}</h4>
-					<h1>{formBool.toString()}</h1>
+					<h1>{formBool ? "Valid" : "Invalid"}</h1>
 					{formBoolMessage}
 				</div>
 			</div>

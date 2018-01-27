@@ -19,7 +19,6 @@ const initialState = {
 	cash: 123456,
 	selectedCoin: "",
 	formCoin: {},
-	formCoinprice_usd: 0,
 	formBool: true,
 	formBoolMessage: "",
 	amount: 0,
@@ -92,7 +91,6 @@ export function cryptoReducer(state = initialState, action) {
 			return {
 				...state,
 				formCoin: action.data[0],
-				formCoinprice_usd: action.data[0].price_usd,
 				isFetching: false
 			};
 		case UPDATE_AMOUNT:

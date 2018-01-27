@@ -29,7 +29,6 @@ class TradeContainer extends Component {
 const mapStateToProps = state => {
 	return {
 		formCoin: state.formCoin,
-		formCoinprice_usd: state.formCoinprice_usd,
 		cash: state.cash,
 		searchResults: state.searchResults,
 		selectedCoin: state.selectedCoin,
@@ -50,6 +49,7 @@ const mapDispatchToProps = (dispatch, ownprops) => {
 			console.log(data);
 			dispatch(makeATrade(data));
 		},
+
 		validateCoin: e => {
 			e.preventDefault();
 			const coin = e.target.value.toLowerCase();
@@ -68,8 +68,9 @@ const mapDispatchToProps = (dispatch, ownprops) => {
 					dispatch(getSearchResults(fuseResults));
 					dispatch(setFormBool(false, "coin selection is no good"));
 				}
-			}, 500);
+			}, 1000);
 		},
+
 		clickACoin: e => {
 			const coin = e.target.getAttribute("data");
 			const url = `https://api.coinmarketcap.com/v1/ticker/${coin}/`;
@@ -78,18 +79,16 @@ const mapDispatchToProps = (dispatch, ownprops) => {
 			dispatch(setFormBool(true));
 			dispatch(_request(url, getFormCoinSuccess));
 		},
+
 		dispatchOnLoad: () => {
 			dispatch(clearSearchResults());
 		},
+
 		changeAmount: e => {
 			e.preventDefault();
 			const amount = e.target.value;
 			console.log(amount);
 			dispatch(updateAmount(amount));
-		},
-		onChangecoinAmountInputValue: e => {
-			const input = e.target;
-			console.log("onChangecoinAmountInputValue");
 		}
 	};
 };
