@@ -2,9 +2,9 @@ import React from "react";
 import PortfolioRow from "./elements/PortfolioRow";
 
 const Portfolio = ({ transactions, portfolio, tradeCoinOnclick }) => {
-	const portfolioRows = portfolio.map(portfolio => (
+	const portfolioRows = portfolio.map((portfolio, index) => (
 		<PortfolioRow
-			key={portfolio.coin}
+			key={index}
 			portfolio={portfolio}
 			tradeCoinOnclick={tradeCoinOnclick}
 		/>
