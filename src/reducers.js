@@ -66,9 +66,31 @@ export function cryptoReducer(state = initialState, action) {
 				error: null
 			};
 		case GET_TICKER_SUCCESS:
+			let coins = action.data.map(coin => {
+				let returnedCoin = { ...coin };
+				if (coin.percent_change_1h < 0) {
+					returnedCoin.color_1h = "red";
+				} else if (coin.percent_change_1h > 0) {
+					returnedCoin.color_1h = "green";
+				}
+
+				if (coin.percent_change_7d < 0) {
+					returnedCoin.color_7d = "red";
+				} else if (coin.percent_change_7d > 0) {
+					returnedCoin.color_7d = "green";
+				}
+
+				if (coin.percent_change_24h < 0) {
+					returnedCoin.color_24h = "red";
+				} else if (coin.percent_change_24h > 0) {
+					returnedCoin.color_24h = "green";
+				}
+
+				return returnedCoin;
+			});
 			return {
 				...state,
-				coins: action.data,
+				coins: coins,
 				isFetching: false
 			};
 		case GET_REQUEST_FAILURE:

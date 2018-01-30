@@ -13,7 +13,11 @@ class App extends Component {
 		return (
 			<Router className="App">
 				<div>
-					<Navbar />
+					<div>
+						{" "}
+						<Navbar />
+					</div>
+
 					<Switch>
 						<Route exact path="/" component={TickerContainer} />
 						<Route path="/trade" component={TradeContainer} />

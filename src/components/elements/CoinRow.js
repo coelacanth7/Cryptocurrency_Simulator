@@ -14,9 +14,9 @@ const CoinRow = ({ coin, onClick }) => (
 		</td>
 		<td>{coin.price_btc}</td>
 		<td>{moneyFormatter(coin.market_cap_usd)}</td>
-		<td>% {coin.percent_change_1h}</td>
-		<td>% {coin.percent_change_24h}</td>
-		<td>% {coin.percent_change_7d}</td>
+		<td style={{ color: coin.color_1h }}>% {coin.percent_change_1h}</td>
+		<td style={{ color: coin.color_24h }}>% {coin.percent_change_24h}</td>
+		<td style={{ color: coin.color_7d }}>% {coin.percent_change_7d}</td>
 	</tr>
 );
 
