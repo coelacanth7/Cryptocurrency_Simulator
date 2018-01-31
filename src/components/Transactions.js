@@ -22,33 +22,7 @@ const Transactions = ({ transactions }) => {
 					<th scope="col">coinAmount</th>
 				</tr>
 			</thead>
-			<tbody>
-				{transactionsRows ? transactionsRows : ""}
-				<tr>
-					<th scope="row" />
-					<td />
-					<td />
-					<td />
-					<td />
-					<td />
-				</tr>
-				<tr>
-					<th scope="row" />
-					<td />
-					<td />
-					<td />
-					<td />
-					<td />
-				</tr>
-				<tr>
-					<th scope="row" />
-					<td />
-					<td />
-					<td />
-					<td />
-					<td />
-				</tr>
-			</tbody>
+			<tbody>{transactionsRows ? transactionsRows : ""}</tbody>
 		</table>
 	);
 };
