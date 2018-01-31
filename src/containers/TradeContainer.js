@@ -48,7 +48,7 @@ const mapDispatchToProps = (dispatch, ownprops) => {
 			e.preventDefault();
 			const form = e.target;
 			const data = serialize(form, { hash: true });
-			console.log(data);
+			console.log("data", data);
 			dispatch(makeATrade(data));
 		},
 

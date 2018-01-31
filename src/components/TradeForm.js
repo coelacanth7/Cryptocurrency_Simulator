@@ -38,6 +38,8 @@ const TradeForm = ({
 
 	const { from } = "/";
 
+	// const listGroupOfCoins =
+
 	return (
 		<div className="container-fluid">
 			<div className="row">
@@ -94,7 +96,7 @@ const TradeForm = ({
 								name="price"
 								id="coinPriceInput"
 								onChange={validateCoin}
-								disabled
+								readOnly="readOnly"
 							/>
 						</div>
 						<div className="form-group">
@@ -108,7 +110,7 @@ const TradeForm = ({
 								onChange={validateCoin}
 								name="coinAmount"
 								id="coinAmount"
-								disabled
+								readOnly="readOnly"
 							/>
 						</div>
 						<input type="hidden" value={Date.now()} name="date" />

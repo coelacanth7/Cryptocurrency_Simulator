@@ -15,6 +15,8 @@ import {
 	CLEAR_PORTFOLIO
 } from "./actions";
 
+import { changePercentColors } from "./helpers";
+
 const initialState = {
 	coins: [],
 	searchResults: [],
@@ -66,28 +68,7 @@ export function cryptoReducer(state = initialState, action) {
 				error: null
 			};
 		case GET_TICKER_SUCCESS:
-			let coins = action.data.map(coin => {
-				let returnedCoin = { ...coin };
-				if (coin.percent_change_1h < 0) {
-					returnedCoin.color_1h = "red";
-				} else if (coin.percent_change_1h > 0) {
-					returnedCoin.color_1h = "green";
-				}
-
-				if (coin.percent_change_7d < 0) {
-					returnedCoin.color_7d = "red";
-				} else if (coin.percent_change_7d > 0) {
-					returnedCoin.color_7d = "green";
-				}
-
-				if (coin.percent_change_24h < 0) {
-					returnedCoin.color_24h = "red";
-				} else if (coin.percent_change_24h > 0) {
-					returnedCoin.color_24h = "green";
-				}
-
-				return returnedCoin;
-			});
+			let coins = changePercentColors(action.data);
 			return {
 				...state,
 				coins: coins,
@@ -127,8 +108,8 @@ export function cryptoReducer(state = initialState, action) {
 							coin: action.data.coin,
 							type: action.data.type,
 							usdAmount: action.data.amount,
-							coinPrice: state.formCoin.price_usd,
-							coinAmount: action.data.amount / state.formCoin.price_usd
+							coinPrice: action.data.price,
+							coinAmount: action.data.coinAmount
 						}
 					)
 				]
@@ -185,7 +166,16 @@ export function cryptoReducer(state = initialState, action) {
 			};
 		case GET_PORTFOLIO_SUCCESS:
 			let releventTransaction = state.transactions.filter(obj => {
-				if (obj.coin === action.data[0].id) {
+				console.log("obj", obj);
+				console.log("action.data[0]", action.data[0]);
+				console.log("state.portfolio", state.portfolio);
+
+				console.log(state.portfolio.map(el => el.date).indexOf(obj.date));
+
+				if (
+					obj.coin === action.data[0].id &&
+					state.portfolio.map(el => el.date).indexOf(obj.date) === -1
+				) {
 					return obj;
 				}
 			})[0];
@@ -204,6 +194,7 @@ export function cryptoReducer(state = initialState, action) {
 						{},
 						{
 							coin: action.data[0].id,
+							date: releventTransaction.date,
 							quantity: releventTransaction.coinAmount,
 							costBasis: releventTransaction.coinPrice,
 							currentPrice: action.data[0].price_usd,
