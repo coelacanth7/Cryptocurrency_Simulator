@@ -105,18 +105,42 @@ export function cryptoReducer(state = initialState, action) {
 				searchResults: []
 			};
 		case MAKE_A_TRADE:
-			let cash = state.cash - action.data.amount;
-			let myCoins = state.myCoins.map(myCoin => {
-				if (myCoin.coin === action.data.coin) {
-					return {
-						coin: myCoin.coin,
-						coinAmount:
-							Number(myCoin.coinAmount) + Number(action.data.coinAmount)
-					};
-				}
+			let cash;
+			let myCoins;
+			let usdAmount;
+			let coinAmount;
 
-				return myCoin;
-			});
+			if (action.data.type === "buy") {
+				cash = state.cash - action.data.amount;
+				usdAmount = action.data.amount;
+				coinAmount = action.data.coinAmount;
+				myCoins = state.myCoins.map(myCoin => {
+					if (myCoin.coin === action.data.coin) {
+						return {
+							coin: myCoin.coin,
+							coinAmount:
+								Number(myCoin.coinAmount) + Number(action.data.coinAmount)
+						};
+					}
+
+					return myCoin;
+				});
+			} else {
+				cash = action.data.amount * action.data.price + state.cash;
+				usdAmount = action.data.amount * action.data.price;
+				coinAmount = action.data.amount;
+				myCoins = state.myCoins.map(myCoin => {
+					if (myCoin.coin === action.data.coin) {
+						return {
+							coin: myCoin.coin,
+							coinAmount: Number(myCoin.coinAmount) - Number(action.data.amount)
+						};
+					}
+
+					return myCoin;
+				});
+			}
+
 			return {
 				...state,
 				formSubmitRedirect: true,
@@ -133,13 +157,14 @@ export function cryptoReducer(state = initialState, action) {
 							date: action.data.date,
 							coin: action.data.coin,
 							type: action.data.type,
-							usdAmount: action.data.amount,
+							usdAmount: usdAmount,
 							coinPrice: action.data.price,
-							coinAmount: action.data.coinAmount
+							coinAmount: coinAmount
 						}
 					)
 				]
 			};
+
 		case SET_SELECTED_COIN:
 			return {
 				...state,
@@ -160,6 +185,7 @@ export function cryptoReducer(state = initialState, action) {
 		case VALIDATE_AMOUNT:
 			let formBool;
 			let formBoolMessage;
+
 			if (state.buySell === "buy") {
 				if (state.cash >= action.amount) {
 					formBool = true;
@@ -167,6 +193,22 @@ export function cryptoReducer(state = initialState, action) {
 				} else {
 					formBool = false;
 					formBoolMessage = "You don't have enough cash for that";
+				}
+			} else {
+				if (state.selectedCoin) {
+					let selectedCoinAmount = state.myCoins.filter(myCoin => {
+						if (myCoin.coin === state.selectedCoin) {
+							return myCoin;
+						}
+					})[0].coinAmount;
+
+					if (selectedCoinAmount >= action.amount) {
+						formBool = true;
+						formBoolMessage = "";
+					} else {
+						formBool = false;
+						formBoolMessage = "You don't have enough coin for that";
+					}
 				}
 			}
 			return {

@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch, ownprops) => {
 			const url = `https://api.coinmarketcap.com/v1/ticker/${coin}/`;
 			dispatch(clearSearchResults());
 			dispatch(setSelectedCoin(coin));
-			// dispatch(setFormBool(true));
+			dispatch(setFormBool(true));
 			dispatch(_request(url, getFormCoinSuccess));
 		},
 

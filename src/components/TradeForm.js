@@ -1,6 +1,8 @@
 import React from "react";
 import { Redirect } from "react-router";
 
+import { moneyFormatter } from "../helpers";
+
 const TradeForm = ({
 	formCoin,
 	makeATrade,
@@ -81,7 +83,7 @@ const TradeForm = ({
 							</select>
 						</div>
 						<div className="form-group">
-							<label htmlFor="cashToInvest">Cash amount:</label>
+							<label htmlFor="cashToInvest">Amount:</label>
 							<input
 								type="number"
 								id="cashToInvest"
@@ -109,7 +111,9 @@ const TradeForm = ({
 							<input
 								type="number"
 								value={
-									formCoin.price_usd ? amount / Number(formCoin.price_usd) : 0
+									formCoin.price_usd && buySell !== "sell"
+										? amount / Number(formCoin.price_usd)
+										: 0
 								}
 								className="form-control"
 								onChange={validateCoin}
@@ -134,7 +138,7 @@ const TradeForm = ({
 				</div>
 				<div className="col-md-4 border">
 					<h3>Cash Available</h3>
-					<h4>$ {cash.toLocaleString()}</h4>
+					<h4>{moneyFormatter(cash)}</h4>
 					<h1>{formBool && selectedCoin.length ? "Valid" : "Invalid"}</h1>
 					{formBoolMessage}
 					<ul className="list-group">
