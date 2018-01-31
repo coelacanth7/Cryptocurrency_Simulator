@@ -225,7 +225,9 @@ export function cryptoReducer(state = initialState, action) {
 		case UPDATE_BUY_SELL:
 			return {
 				...state,
-				buySell: action.data
+				buySell: action.data,
+				amount: 0,
+				formBool: false
 			};
 		case CLEAR_PORTFOLIO:
 			return {
