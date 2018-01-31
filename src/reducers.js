@@ -19,6 +19,20 @@ import { changePercentColors } from "./helpers";
 
 const initialState = {
 	coins: [],
+	myCoins: [
+		{
+			coin: "bitcoin",
+			coinAmount: 0.08960894655722428
+		},
+		{
+			coin: "litecoin",
+			coinAmount: 5.660719137759261
+		},
+		{
+			coin: "eos",
+			coinAmount: 69.89438957734863
+		}
+	],
 	searchResults: [],
 	transactions: [
 		{
@@ -92,13 +106,25 @@ export function cryptoReducer(state = initialState, action) {
 			};
 		case MAKE_A_TRADE:
 			let cash = state.cash - action.data.amount;
+			let myCoins = state.myCoins.map(myCoin => {
+				if (myCoin.coin === action.data.coin) {
+					return {
+						coin: myCoin.coin,
+						coinAmount:
+							Number(myCoin.coinAmount) + Number(action.data.coinAmount)
+					};
+				}
+
+				return myCoin;
+			});
 			return {
 				...state,
 				formSubmitRedirect: true,
 				selectedCoin: "",
 				formCoin: {},
 				amount: 0,
-				cash: cash,
+				cash,
+				myCoins,
 				transactions: [
 					...state.transactions,
 					Object.assign(
@@ -166,12 +192,6 @@ export function cryptoReducer(state = initialState, action) {
 			};
 		case GET_PORTFOLIO_SUCCESS:
 			let releventTransaction = state.transactions.filter(obj => {
-				console.log("obj", obj);
-				console.log("action.data[0]", action.data[0]);
-				console.log("state.portfolio", state.portfolio);
-
-				console.log(state.portfolio.map(el => el.date).indexOf(obj.date));
-
 				if (
 					obj.coin === action.data[0].id &&
 					state.portfolio.map(el => el.date).indexOf(obj.date) === -1

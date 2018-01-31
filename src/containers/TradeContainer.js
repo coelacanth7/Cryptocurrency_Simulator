@@ -37,7 +37,8 @@ const mapStateToProps = state => {
 		formBoolMessage: state.formBoolMessage,
 		amount: state.amount,
 		formSubmitRedirect: state.formSubmitRedirect,
-		buySell: state.buySell
+		buySell: state.buySell,
+		myCoins: state.myCoins
 	};
 };
 

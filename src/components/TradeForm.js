@@ -15,7 +15,8 @@ const TradeForm = ({
 	amount,
 	formSubmitRedirect,
 	onChangeBuySell,
-	buySell
+	buySell,
+	myCoins
 }) => {
 	let coinNotFound = "";
 	if (searchResults.length) {
@@ -38,7 +39,11 @@ const TradeForm = ({
 
 	const { from } = "/";
 
-	// const listGroupOfCoins =
+	const listGroupOfCoins = myCoins.map(myCoin => (
+		<li className="list-group-item" key={myCoin.coin}>
+			{myCoin.coin}: {myCoin.coinAmount}
+		</li>
+	));
 
 	return (
 		<div className="container-fluid">
@@ -132,6 +137,10 @@ const TradeForm = ({
 					<h4>$ {cash.toLocaleString()}</h4>
 					<h1>{formBool && selectedCoin.length ? "Valid" : "Invalid"}</h1>
 					{formBoolMessage}
+					<ul className="list-group">
+						<li className="list-group-item">Current Coins</li>
+						{listGroupOfCoins}
+					</ul>
 				</div>
 			</div>
 		</div>
