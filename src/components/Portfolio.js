@@ -22,7 +22,7 @@ const Portfolio = ({ transactions, portfolio, tradeCoinOnclick }) => {
 	});
 
 	return (
-		<div>
+		<div className="table-responsive">
 			<table className="table table-hover mb-5">
 				<thead>
 					<tr>

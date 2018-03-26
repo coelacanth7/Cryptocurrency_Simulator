@@ -45,38 +45,40 @@ const Ticker = ({
 
 	return (
 		<div>
-			<h1>Coins:</h1>
+			<SearchForm
+				getSearchResults={getSearchResults}
+				clearSearchResults={clearSearchResults}
+			/>
 			<div className="row">
 				<div className="text-right">
 					<nav className="text-right" aria-label="...">
-						<ul className="pagination pagination-lg top-paginator">
+						<ul className="pagination pagination-md top-paginator">
 							{pagination ? pagination.prevPage : ""}
 							{pagination ? pagination.nextPage : ""}
 						</ul>
 					</nav>
 				</div>
 			</div>
-			<SearchForm
-				getSearchResults={getSearchResults}
-				clearSearchResults={clearSearchResults}
-			/>
 			<ul className="list-group">{searchListItems}</ul>
-			<table className="table table-hover">
-				<thead>
-					<tr>
-						<th scope="col">Rank</th>
-						<th scope="col">Coin</th>
-						<th scope="col">Price USD</th>
-						<th />
-						<th scope="col">Price BTC</th>
-						<th scope="col">Market Cap $</th>
-						<th scope="col">% change 1h</th>
-						<th scope="col">% change 24h</th>
-						<th scope="col">% change 7d</th>
-					</tr>
-				</thead>
-				<tbody>{coinRows ? coinRows : ""}</tbody>
-			</table>
+			<div className="table-responsive">
+				<table className="table table-hover">
+					<thead>
+						<tr>
+							<th scope="col">Rank</th>
+							<th scope="col">Coin</th>
+							<th scope="col">Price USD</th>
+							<th />
+							<th scope="col">Price BTC</th>
+							<th scope="col">Market Cap $</th>
+							<th scope="col">% change 1h</th>
+							<th scope="col">% change 24h</th>
+							<th scope="col">% change 7d</th>
+						</tr>
+					</thead>
+					<tbody>{coinRows ? coinRows : ""}</tbody>
+				</table>
+			</div>
+
 			<div className="row">
 				<div className="text-right">
 					<nav className="text-right" aria-label="...">

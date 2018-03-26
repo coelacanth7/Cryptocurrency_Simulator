@@ -11,19 +11,21 @@ const Transactions = ({ transactions }) => {
 	));
 
 	return (
-		<table className="table table-hover">
-			<thead>
-				<tr>
-					<th scope="col">Date</th>
-					<th scope="col">Coin</th>
-					<th scope="col">Type</th>
-					<th scope="col">usdAmount</th>
-					<th scope="col">coinPrice</th>
-					<th scope="col">coinAmount</th>
-				</tr>
-			</thead>
-			<tbody>{transactionsRows ? transactionsRows : ""}</tbody>
-		</table>
+		<div className="table-responsive">
+			<table className="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">Date</th>
+						<th scope="col">Coin</th>
+						<th scope="col">Type</th>
+						<th scope="col">usdAmount</th>
+						<th scope="col">coinPrice</th>
+						<th scope="col">coinAmount</th>
+					</tr>
+				</thead>
+				<tbody>{transactionsRows ? transactionsRows : ""}</tbody>
+			</table>
+		</div>
 	);
 };
 
